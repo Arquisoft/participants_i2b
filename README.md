@@ -14,5 +14,7 @@ Skeleton of participants module
 - Herminio García González (@herminiogg)
 - Jose Emilio Labra Gayo (@labra)
 - Jorge Zapatero Sánchez (@JorgeZapa)
+- Damián Rubio Cuervo (@DamianRubio)
+- Antonio Nicolás Rivero Gómez (@Lan5432)
 
 
