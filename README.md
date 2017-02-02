@@ -7,6 +7,8 @@
 
 [![Join the chat at https://gitter.im/Arquisoft/participants_i2b](https://badges.gitter.im/Arquisoft/participants_i2b.svg)](https://gitter.im/Arquisoft/participants_i2b?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 
+[![Join the chat at https://gitter.im/Arquisoft/participants_i2b](https://badges.gitter.im/Arquisoft/participants_i2b.svg)](https://gitter.im/Arquisoft/participants_i2b?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
+
 Skeleton of participants module
 
 # Authors
