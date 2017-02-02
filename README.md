@@ -3,9 +3,7 @@
 [![codecov](https://codecov.io/gh/Arquisoft/participants_i2b/branch/master/graph/badge.svg)](https://codecov.io/gh/Arquisoft/participants_i2b)
 
 
-# participants0
-
-[![Join the chat at https://gitter.im/Arquisoft/participants_i2b](https://badges.gitter.im/Arquisoft/participants_i2b.svg)](https://gitter.im/Arquisoft/participants_i2b?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
+# participants_i2b
 
 [![Join the chat at https://gitter.im/Arquisoft/participants_i2b](https://badges.gitter.im/Arquisoft/participants_i2b.svg)](https://gitter.im/Arquisoft/participants_i2b?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 
