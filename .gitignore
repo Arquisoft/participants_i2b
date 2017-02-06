@@ -80,3 +80,11 @@ local.properties
 
 # IntelliJ
 /out/
+.idea/copyright
+.idea/.name
+.idea/compiler.xml
+.idea/encodings
+.idea/misc.xml
+.idea/modules.xml
+.idea/vcs.xml
+participant0.iml
