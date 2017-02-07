@@ -76,10 +76,9 @@ local.properties
 ## File-based project format:
 *.iws
 
-## Plugin-specific files:
-
 # IntelliJ
 /out/
+<<<<<<< HEAD
 .idea/copyright
 .idea/.name
 .idea/compiler.xml
@@ -88,3 +87,7 @@ local.properties
 .idea/modules.xml
 .idea/vcs.xml
 participants0.iml
+=======
+*/.idea/*
+*.iml
+>>>>>>> db523c2cd673a89a3d22e56a5bc36bee5164b459
