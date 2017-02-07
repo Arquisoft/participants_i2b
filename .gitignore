@@ -83,8 +83,8 @@ local.properties
 .idea/copyright
 .idea/.name
 .idea/compiler.xml
-.idea/encodings
+.idea/encodings.xml
 .idea/misc.xml
 .idea/modules.xml
 .idea/vcs.xml
-participant0.iml
+participants0.iml
