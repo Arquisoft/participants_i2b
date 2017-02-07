@@ -7,6 +7,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import repository.UsersRepository;
 
+import java.util.List;
+
 @RestController
 public class APIController {
 
@@ -14,8 +16,8 @@ public class APIController {
     private UsersRepository repository;
 
     @RequestMapping("/user")
-    public User participant() {
-        return repository.findAll().get(0);
+    public List<User> users() {
+        return repository.findAll();
     }
 
 }
