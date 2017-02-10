@@ -24,15 +24,20 @@ public class User {
     public String nationality;
     public String nif;
 
-    protected User(){
+    User(){
 
     }
 
-    public User(String firstName, String lastName, String email, String password, Date dateOfBirth, String address, String nationality, String nif) {
+    public User(String firstName, String lastName, String email, String password) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.email = email;
         this.password = password;
+    }
+
+    public User(String firstName, String lastName, String email,
+                String password, Date dateOfBirth, String address, String nationality, String nif) {
+        this(firstName, lastName, email, password);
         this.dateOfBirth = dateOfBirth;
         this.address = address;
         this.nationality = nationality;
