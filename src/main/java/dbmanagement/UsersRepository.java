@@ -1,4 +1,4 @@
-package repository;
+package dbmanagement;
 
 import domain.User;
 import org.springframework.data.mongodb.repository.MongoRepository;
@@ -11,5 +11,5 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface UsersRepository extends MongoRepository<User, Long>{
 
-    public User findByEmail(String email);
+    User findByEmail(String email);
 }

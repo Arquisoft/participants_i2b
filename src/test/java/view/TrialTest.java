@@ -1,4 +1,4 @@
-package hello;
+package view;
 
 import static org.hamcrest.Matchers.is;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
@@ -17,10 +17,6 @@ import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 import org.springframework.web.servlet.view.InternalResourceViewResolver;
 
 import com.gargoylesoftware.htmlunit.WebClient;
-import com.gargoylesoftware.htmlunit.html.HtmlButton;
-import com.gargoylesoftware.htmlunit.html.HtmlForm;
-import com.gargoylesoftware.htmlunit.html.HtmlPage;
-import com.gargoylesoftware.htmlunit.html.HtmlTextInput;
 
 import domain.User;
 @RunWith(SpringJUnit4ClassRunner.class)
@@ -35,11 +31,11 @@ public class TrialTest {
 	
 	
 	@Before
-	public void setup() throws Exception {
+	public void setUp() throws Exception {
 
 		InternalResourceViewResolver viewResolver = new InternalResourceViewResolver();
 
-		this.mockMvc = standaloneSetup(new MainController() ).setViewResolvers(viewResolver).build();
+		this.mockMvc = standaloneSetup(new ParticipantsDataController() ).setViewResolvers(viewResolver).build();
 		webClient = new WebClient();
 		  //webClient.setWebConnection(new MockMvcWebConnection(mockMvc));
 		  webClient.getOptions().setThrowExceptionOnFailingStatusCode(false);

@@ -1,4 +1,4 @@
-package hello;
+package view;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -10,11 +10,11 @@ import org.springframework.web.servlet.ModelAndView;
  * Created by Nicolás on 08/02/2017.
  */
 @Controller
-public class HolaController {
+public class ParticipantsController {
 
     //The first page shown will be login.html.
     @GetMapping(value="/")
-    public String landing() {
+    public String getParticipantInfo() {
         return "login";
     }
 
