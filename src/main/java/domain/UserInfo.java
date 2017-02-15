@@ -1,23 +1,23 @@
 package domain;
 
-public class UserInfo {
-	
-	private String login;
-	private String password;
-	
-	public String getLogin() {
-		return login;
-	}
-	public void setLogin(String login) {
-		this.login = login;
-	}
-	public String getPassword() {
-		return password;
-	}
-	public void setPassword(String password) {
-		this.password = password;
-	}
-	
-	
+import org.springframework.data.mongodb.core.mapping.Document;
 
+/**
+ * Created by Nicolás on 15/02/2017.
+ */
+public class UserInfo {
+
+    private String firstName;
+    private String lastName;
+    private int age;
+    private String id;
+    private String email;
+
+    public UserInfo(String firstName, String lastName, int age, String id, String email) {
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.age = age;
+        this.id = id;
+        this.email = email;
+    }
 }

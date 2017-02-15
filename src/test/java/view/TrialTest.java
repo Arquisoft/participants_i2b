@@ -4,7 +4,6 @@ import static org.hamcrest.Matchers.is;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
-import static org.springframework.test.web.servlet.setup.MockMvcBuilders.standaloneSetup;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -35,7 +34,7 @@ public class TrialTest {
 
 		InternalResourceViewResolver viewResolver = new InternalResourceViewResolver();
 
-		this.mockMvc = standaloneSetup(new ParticipantsDataController() ).setViewResolvers(viewResolver).build();
+		//this.mockMvc = standaloneSetup(new ParticipantsDataController() ).setViewResolvers(viewResolver).build();
 		webClient = new WebClient();
 		  //webClient.setWebConnection(new MockMvcWebConnection(mockMvc));
 		  webClient.getOptions().setThrowExceptionOnFailingStatusCode(false);
