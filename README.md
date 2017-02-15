@@ -17,4 +17,8 @@ Skeleton of participants module
 - Damián Rubio Cuervo (@DamianRubio)
 - Antonio Nicolás Rivero Gómez (@Lan5432)
 
+# MongoDB
+This project uses MongoDB as the database. You can check how to use it on
+ - [MongoDB install](https://github.com/Arquisoft/participants_i2b/wiki/MongoDB)
+
 
