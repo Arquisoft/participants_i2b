@@ -22,9 +22,9 @@
 
     <!-- container class in order to tell BS to treat it as a container and it is usually container -->
     <div class="container">
-        <form id="Datos" class="form-signin" method="post" action="/user" modelAttribute="User">
+        <form id="Datos" class="form-signin" method="post" action="/user" modelAttribute="UserInfo" enctype="multipart/form-data">
           <h2>Login</h2>
-            <input id="name" name="name" type="text" class="form-control" placeholder="Name" />
+            <input id="name" name="login" type="text" class="form-control" placeholder="Name" />
             <input name="password" type="password" class="form-control" placeholder="Password" />
                 <button id="Enter" name="Enter" type="submit" value="enter" class="btn btn-block btn-primary btn-lg">Enter </button>
                 <button type="submit" formaction="/register" class="btn btn-block btn-success btn-lg">Register </button>

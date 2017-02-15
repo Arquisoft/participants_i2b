@@ -9,7 +9,7 @@ public interface ParticipantsService {
 
     User getParticipant(String email, String password);
 
-    void updateInfo(String email, String password, String oldPassword);
+    void updateInfo(User user, String oldPassword);
 
 
 }

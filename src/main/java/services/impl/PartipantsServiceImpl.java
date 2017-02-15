@@ -13,7 +13,7 @@ public class PartipantsServiceImpl implements ParticipantsService {
     }
 
     @Override
-    public void updateInfo(String email, String password, String oldPassword) {
+    public void updateInfo(User user, String newPassword) {
 
     }
 }

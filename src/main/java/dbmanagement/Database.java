@@ -11,5 +11,4 @@ public interface Database {
 
     User getParticipant(String email, String password);
 
-    void updatePassword(String email, String password, String newPassword);
 }

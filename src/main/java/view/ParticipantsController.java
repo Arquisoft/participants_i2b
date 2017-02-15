@@ -1,10 +1,14 @@
 package view;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.servlet.ModelAndView;
+
+import domain.UserInfo;
 
 /**
  * Created by Nicolás on 08/02/2017.
@@ -20,9 +24,8 @@ public class ParticipantsController {
 
     //Controlling a POST access to the page.
     @PostMapping(value="/")
-    public ModelAndView letRegister(@RequestParam(value="name") String name,
-                                    @RequestParam(value="password") String password){
+    public ModelAndView letRegister(@RequestBody UserInfo info, HttpServletRequest request){
+    	request.setAttribute("Content-Type", "application/json");
         return new ModelAndView("forward:/user");
-        //return new ModelAndView(String.format("forward:/user?name=%s&password=%s", name, password));
     }
 }
