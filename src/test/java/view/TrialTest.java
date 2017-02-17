@@ -1,5 +1,8 @@
 package view;
 
+/**
+ * Created by Jorge.
+ */
 import static org.hamcrest.Matchers.is;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
@@ -8,6 +11,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.springframework.boot.SpringBootConfiguration;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
@@ -20,6 +24,7 @@ import com.gargoylesoftware.htmlunit.WebClient;
 import domain.User;
 @RunWith(SpringJUnit4ClassRunner.class)
 @SpringBootTest
+@SpringBootConfiguration
 @WebAppConfiguration
 public class TrialTest {
 	
@@ -34,8 +39,8 @@ public class TrialTest {
 
 		InternalResourceViewResolver viewResolver = new InternalResourceViewResolver();
 
-		//this.mockMvc = standaloneSetup(new ParticipantsDataController() ).setViewResolvers(viewResolver).build();
-		webClient = new WebClient();
+		 //this.mockMvc = standaloneSetup(new ParticipantsDataController(null) ).setViewResolvers(viewResolver).build();
+		 webClient = new WebClient();
 		  //webClient.setWebConnection(new MockMvcWebConnection(mockMvc));
 		  webClient.getOptions().setThrowExceptionOnFailingStatusCode(false);
 		  webClient.getOptions().setThrowExceptionOnScriptError(false);

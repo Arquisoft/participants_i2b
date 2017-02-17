@@ -15,14 +15,14 @@ public class User {
     @Id
     private long id;
 
-    public String firstName;
-    public String lastName;
-    public String email;
-    public String password;
-    public Date dateOfBirth;
-    public String address;
-    public String nationality;
-    public String nif;
+    private String firstName;
+    private String lastName;
+    private String email;
+    private String password;
+    private Date dateOfBirth;
+    private String address;
+    private String nationality;
+    private String nif;
 
     User(){
 
