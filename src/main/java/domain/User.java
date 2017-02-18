@@ -1,5 +1,6 @@
 package domain;
 
+import org.bson.types.ObjectId;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
@@ -13,7 +14,7 @@ import java.util.Date;
 public class User {
 
     @Id
-    private long id;
+    private ObjectId id;
 
     private String firstName;
     private String lastName;
@@ -23,6 +24,7 @@ public class User {
     private String address;
     private String nationality;
     private String userId;
+
 
     User(){
 

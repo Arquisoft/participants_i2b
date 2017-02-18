@@ -1,6 +1,7 @@
 package dbmanagement;
 
 import domain.User;
+import org.bson.types.ObjectId;
 import org.springframework.data.mongodb.repository.MongoRepository;
 import org.springframework.stereotype.Repository;
 
@@ -9,7 +10,7 @@ import org.springframework.stereotype.Repository;
  */
 
 @Repository
-public interface UsersRepository extends MongoRepository<User, Long>{
+public interface UsersRepository extends MongoRepository<User, ObjectId>{
 
     User findByEmail(String email);
     User findByEmailAndPassword(String email, String password);

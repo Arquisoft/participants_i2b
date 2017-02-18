@@ -16,8 +16,8 @@ public class MongoDatabase implements Database{
 	}
 
 	@Override
-	public User getParticipant(String email, String password) {
-		return users.findByEmailAndPassword(email, password);
+	public User getParticipant(String email) {
+		return users.findByEmail(email);
 	}
 
 }

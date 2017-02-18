@@ -19,6 +19,7 @@
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-web</artifactId>
 		</dependency>
+		
 
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
@@ -47,6 +48,13 @@
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-thymeleaf</artifactId>
 		</dependency>
+		
+		<!-- Jasypt Depencency -->
+		<dependency>
+  			<groupId>org.jasypt</groupId>
+   			<artifactId>jasypt</artifactId>
+   			<version>1.9.2</version>
+  		</dependency>
 
 		<!-- MongoDB Dependency -->
 		<dependency>
@@ -110,7 +118,7 @@
 						</goals>
 					</execution>
 					<execution>
-						<userId>report</userId>
+						<id>report</id>
 						<phase>test</phase>
 						<goals>
 							<goal>report</goal>
@@ -172,14 +180,14 @@
 
 	<repositories>
 		<repository>
-			<userId>spring-releases</userId>
+			<id>spring-releases</id>
 			<url>https://repo.spring.io/libs-release</url>
 		</repository>
 	</repositories>
 
 	<pluginRepositories>
 		<pluginRepository>
-			<userId>spring-releases</userId>
+			<id>spring-releases</id>
 			<url>https://repo.spring.io/libs-release</url>
 		</pluginRepository>
 	</pluginRepositories>
