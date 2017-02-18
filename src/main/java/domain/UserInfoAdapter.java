@@ -1,8 +1,8 @@
 package domain;
 
 import java.time.LocalDate;
+import java.time.Period;
 import java.time.ZoneId;
-import java.util.Calendar;
 import java.util.Date;
 
 /**
@@ -17,14 +17,12 @@ public class UserInfoAdapter {
     }
 
     public UserInfo userToInfo(){
-        Calendar cal = Calendar.getInstance();
-        int now = cal.get(Calendar.YEAR);
-        Date date = user.getDateOfBirth();
-        LocalDate localDate = date.toInstant()
+        LocalDate current = new Date().toInstant()
                 .atZone(ZoneId.systemDefault()).toLocalDate();
-        cal.add(Calendar.YEAR, -localDate.getYear());
-        int then = cal.get(Calendar.YEAR);
+        LocalDate then = user.getDateOfBirth().toInstant()
+                .atZone(ZoneId.systemDefault()).toLocalDate();
+        Period per = Period.between(then, current);
         return new UserInfo(user.getFirstName(), user.getLastName(),
-                now - then, user.getNif(), user.getEmail());
+                per.getYears(), user.getUserId(), user.getEmail());
     }
 }

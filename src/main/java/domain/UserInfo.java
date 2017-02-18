@@ -10,18 +10,18 @@ public class UserInfo implements Serializable{
     private String firstName;
     private String lastName;
     private int age;
-    private String id;
+    private String userId;
     private String email;
 
     UserInfo(){
 
     }
 
-    public UserInfo(String firstName, String lastName, int age, String id, String email) {
+    public UserInfo(String firstName, String lastName, int age, String userId, String email) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.age = age;
-        this.id = id;
+        this.userId = userId;
         this.email = email;
     }
 
@@ -37,8 +37,8 @@ public class UserInfo implements Serializable{
         return age;
     }
 
-    public String getId() {
-        return id;
+    public String getUserId() {
+        return userId;
     }
 
     public String getEmail() {
@@ -57,8 +57,8 @@ public class UserInfo implements Serializable{
         this.age = age;
     }
 
-    public void setId(String id) {
-        this.id = id;
+    public void setUserId(String userId) {
+        this.userId = userId;
     }
 
     public void setEmail(String email) {

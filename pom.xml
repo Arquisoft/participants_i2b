@@ -110,7 +110,7 @@
 						</goals>
 					</execution>
 					<execution>
-						<id>report</id>
+						<userId>report</userId>
 						<phase>test</phase>
 						<goals>
 							<goal>report</goal>
@@ -172,14 +172,14 @@
 
 	<repositories>
 		<repository>
-			<id>spring-releases</id>
+			<userId>spring-releases</userId>
 			<url>https://repo.spring.io/libs-release</url>
 		</repository>
 	</repositories>
 
 	<pluginRepositories>
 		<pluginRepository>
-			<id>spring-releases</id>
+			<userId>spring-releases</userId>
 			<url>https://repo.spring.io/libs-release</url>
 		</pluginRepository>
 	</pluginRepositories>

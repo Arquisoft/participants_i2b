@@ -15,14 +15,14 @@ public class User {
     @Id
     private long id;
 
-    public String firstName;
-    public String lastName;
-    public String email;
-    public String password;
-    public Date dateOfBirth;
-    public String address;
-    public String nationality;
-    public String nif;
+    private String firstName;
+    private String lastName;
+    private String email;
+    private String password;
+    private Date dateOfBirth;
+    private String address;
+    private String nationality;
+    private String userId;
 
     User(){
 
@@ -36,12 +36,12 @@ public class User {
     }
 
     public User(String firstName, String lastName, String email,
-                String password, Date dateOfBirth, String address, String nationality, String nif) {
+                String password, Date dateOfBirth, String address, String nationality, String userId) {
         this(firstName, lastName, email, password);
         this.dateOfBirth = dateOfBirth;
         this.address = address;
         this.nationality = nationality;
-        this.nif = nif;
+        this.userId = userId;
     }
 
     @Override
@@ -54,7 +54,7 @@ public class User {
                 ", dateOfBirth='" + dateOfBirth + '\'' +
                 ", address='" + address + '\'' +
                 ", nationality='" + nationality + '\'' +
-                ", nif='" + nif + '\'' +
+                ", userId='" + userId + '\'' +
                 '}';
     }
 
@@ -65,13 +65,13 @@ public class User {
 
         User user = (User) o;
 
-        return nif.equals(user.nif);
+        return userId.equals(user.userId);
 
     }
 
     @Override
     public int hashCode() {
-        return nif.hashCode();
+        return userId.hashCode();
     }
 
     public String getFirstName() {
@@ -102,8 +102,8 @@ public class User {
         return nationality;
     }
 
-    public String getNif() {
-        return nif;
+    public String getUserId() {
+        return userId;
     }
 
     public void setFirstName(String firstName) {

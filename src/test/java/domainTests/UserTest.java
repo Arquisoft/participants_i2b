@@ -131,11 +131,11 @@ public class UserTest {
     @Test
     public void nifTest(){
 
-        Assert.assertEquals(null, nico.getNif());
+        Assert.assertEquals(null, nico.getUserId());
 
-        Assert.assertEquals("111111111A", jorge.getNif());
+        Assert.assertEquals("111111111A", jorge.getUserId());
 
-        Assert.assertEquals("222222222B", damian.getNif());
+        Assert.assertEquals("222222222B", damian.getUserId());
     }
 
 }

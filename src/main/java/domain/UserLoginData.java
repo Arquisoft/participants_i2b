@@ -1,11 +1,12 @@
 package domain;
 
 public class UserLoginData {
-	
+
+
 	private String login;
 	private String password;
 
-	UserLoginData(){
+	public UserLoginData(){
 
 	}
 
@@ -17,16 +18,9 @@ public class UserLoginData {
 	public String getLogin() {
 		return login;
 	}
-	public void setLogin(String login) {
-		this.login = login;
-	}
-	public String getPassword() {
+
+    public String getPassword() {
 		return password;
 	}
-	public void setPassword(String password) {
-		this.password = password;
-	}
-	
-	
 
 }

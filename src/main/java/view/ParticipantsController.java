@@ -2,9 +2,8 @@ package view;
 
 import domain.UserLoginData;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 
 
 /**
@@ -15,13 +14,10 @@ public class ParticipantsController {
 
     //The first page shown will be login.html.
     @GetMapping(value="/")
-    public String getParticipantInfo() {
+    public String getParticipantInfo(Model model) {
+        model.addAttribute("userinfo", new UserLoginData());
         return "login";
     }
 
-    @PostMapping(value="/")
-    public String redirectFromForm(@RequestBody UserLoginData info){
-        return "redirect:/user";
-    }
 
 }

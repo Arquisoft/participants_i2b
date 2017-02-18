@@ -54,7 +54,7 @@ public class TrialTest {
 							.param("name", "Pepe") //The needed parameter for the form.
 							.param("password", "NoMeSeMiPassword")).andDo(print())//AndDoPrint it is very usefull to see the http response and see if something went wrong.
 							.andExpect(MockMvcResultMatchers.status().isOk()) //The state of the response must be OK. (200); 
-							.andExpect(jsonPath("$.firstName",is(prueba.firstName))); //We can do jsonpaths in order to check that the json information displayes its ok.
+							.andExpect(jsonPath("$.firstName",is(prueba.getFirstName()))); //We can do jsonpaths in order to check that the json information displayes its ok.
 		
 		//Just an example of how to manage the from of this page in case it is necessary further checking as a user using the web interface.
 //		HtmlPage createMsgFromPage = webClient.getPage("http://localhost:8080/");
