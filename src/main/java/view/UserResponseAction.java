@@ -24,8 +24,9 @@ public class UserResponseAction {
     public ResponseEntity<UserInfo> execute(UserLoginData info){
         User user = part.getParticipant(info.getLogin(), info.getPassword());
         UserInfoAdapter data = new UserInfoAdapter(user);
-        if(user == null)
+        if(user == null){
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
         else
             return new ResponseEntity<>(data.userToInfo(), HttpStatus.OK);
     }

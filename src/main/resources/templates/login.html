@@ -23,7 +23,7 @@
     <div class="container">
         <form action="#" th:action="@{/userForm}" th:object="${userinfo}" id="Datos" class="form-signin" method="post">
           <h2>Login</h2>
-                <input id="name" name="login" type="text" th:field="*{login}" class="form-control" placeholder="Name" />
+                <input id="login" name="login" type="text" th:field="*{login}" class="form-control" placeholder="email" />
                 <input id="password" name="password" type="password" th:field="*{password}" class="form-control" placeholder="Password" />
                 <button id="Enter" name="Enter" type="submit" value="enter" class="btn btn-block btn-primary btn-lg">Enter </button>
                 <button type="submit" formaction="/register" class="btn btn-block btn-success btn-lg">Register </button>
