@@ -7,59 +7,124 @@ import static org.hamcrest.Matchers.is;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+import static org.springframework.test.web.servlet.setup.MockMvcBuilders.standaloneSetup;
 
+import dbmanagement.Database;
+import domain.UserLoginData;
+import main.Application;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.mockito.Mock;
+import org.mockito.MockitoAnnotations;
+import org.mockito.runners.MockitoJUnitRunner;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringBootConfiguration;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.boot.context.embedded.LocalServerPort;
+import org.springframework.boot.test.IntegrationTest;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.context.annotation.ComponentScan;
+import org.springframework.http.MediaType;
+import org.springframework.mock.web.MockHttpServletRequest;
+import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
 import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.test.web.servlet.request.MockHttpServletRequestBuilder;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
+import org.springframework.test.web.servlet.setup.DefaultMockMvcBuilder;
+import org.springframework.test.web.servlet.setup.MockMvcBuilders;
+import org.springframework.web.context.WebApplicationContext;
 import org.springframework.web.servlet.view.InternalResourceViewResolver;
 
 import com.gargoylesoftware.htmlunit.WebClient;
 
 import domain.User;
+import services.ParticipantsService;
+
+import java.net.URL;
+
+@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT, classes ={Application.class})
 @RunWith(SpringJUnit4ClassRunner.class)
-@SpringBootTest
-@SpringBootConfiguration
-@WebAppConfiguration
-public class TrialTest {
-	
+@IntegrationTest("local.server.port=1")
+public class TrialTest{
+
+    @LocalServerPort
+    private int port;
+
+    @Autowired
+    private WebApplicationContext context;
+
+    @Autowired
+    private ParticipantsService service;
+
 	//MockMvc --> Para realizar peticiones y comprobar resultado, usado para respuestas con informacion json.
 	private MockMvc mockMvc;
-	//WebClient --> We simmulate a user using our web interface, interacting with the html components and navigability in the web application.
+	//WebClient --> We simmulate a user using our web interface,
+    //interacting with the html components and navigability in the web application.
 	private WebClient webClient;
 	
 	
 	@Before
 	public void setUp() throws Exception {
+	    String url = "hola " + port;
+
+        MockitoAnnotations.initMocks(this);
 
 		InternalResourceViewResolver viewResolver = new InternalResourceViewResolver();
 
-		 //this.mockMvc = standaloneSetup(new ParticipantsDataController(null) ).setViewResolvers(viewResolver).build();
-		 webClient = new WebClient();
-		  //webClient.setWebConnection(new MockMvcWebConnection(mockMvc));
-		  webClient.getOptions().setThrowExceptionOnFailingStatusCode(false);
-		  webClient.getOptions().setThrowExceptionOnScriptError(false);
+        this.mockMvc = MockMvcBuilders.webAppContextSetup(this.context).build();
+		webClient = new WebClient();
+		//webClient.setWebConnection(new MockMvcWebConnection(mockMvc));
+		webClient.getOptions().setThrowExceptionOnFailingStatusCode(false);
+		webClient.getOptions().setThrowExceptionOnScriptError(false);
 		  
-		  //webClient.getOptions().setThrowExceptionOnFailingStatusCode(false);
+		//webClient.getOptions().setThrowExceptionOnFailingStatusCode(false);
 
 	}
-	
-	@Test
+
+
+
+    @Test
 	public void userInsertInformation() throws Exception{
+	    /*
+	    {
+            "_id" : ObjectId("58a8670df086e81dc034d7fc"),
+            "name" : "Prueba01",
+            "surname" : "Apellido01",
+            "email" : "prueba01@prueba.es",
+            "address" : "c/Prueba n0 1a",
+            "nationality" : "España",
+            "dni" : "00000001J",
+            "date" : ISODate("1981-12-27T23:00:00.000Z"),
+            "unencrypted" : "4[[j[frVCUMJ>hU",
+            "password" : "khZZwjdhWwVbMdmOvz9eqBfKR1N6A+CdFBDM9c1dQduUnGewQyPRlBxB4Q6wT7Cq"
+        }
+	     */
+
+	    /*
+	    Response
+	    {"firstName":"Prueba01","lastName":"Apellido01","age":35,"userId":"00000001J","email":"prueba01@prueba.es"}
+	    * */
 		
 		//Here would be more appropiate to get the user from the database.
-		User prueba= new User("Pepe", "holaApellidos", "hola@hola", "NoMeSeMiPassword");
-		
-		mockMvc.perform(post("/user")//We send a POST request to that URI (from http:localhost...)
-							.param("name", "Pepe") //The needed parameter for the form.
-							.param("password", "NoMeSeMiPassword")).andDo(print())//AndDoPrint it is very usefull to see the http response and see if something went wrong.
-							.andExpect(MockMvcResultMatchers.status().isOk()) //The state of the response must be OK. (200); 
-							.andExpect(jsonPath("$.firstName",is(prueba.getFirstName()))); //We can do jsonpaths in order to check that the json information displayes its ok.
+        User prueba = new User("Prueba01", "Apellido01",
+                    "prueba01@prueba.es", "4[[j[frVCUMJ>hU");
+        UserLoginData data = new UserLoginData("prueba01@prueba.es", "4[[j[frVCUMJ>hU");
+		String payload = String.format("{\"login\":\"%s\", \"password\":\"%s\"}", data.getLogin(), data.getPassword());
+        //We send a POST request to that URI (from http:localhost...)
+        MockHttpServletRequestBuilder request = post("/user")
+                .contentType(MediaType.APPLICATION_JSON).content(payload.getBytes());
+		mockMvc.perform(request)
+                            .andDo(print())//AndDoPrint it is very usefull to see the http response and see if something went wrong.
+							.andExpect(status().isOk()) //The state of the response must be OK. (200);
+							.andExpect(jsonPath("$.firstName",is(prueba.getFirstName()))) //We can do jsonpaths in order to check that the json information displayes its ok.
+                            .andExpect(jsonPath("$.lastName", is(prueba.getLastName())))
+                            .andExpect(jsonPath("$.age", is(35)))//Born in 1996
+                            .andExpect(jsonPath("$.userId", is("00000001J")))
+                            .andExpect(jsonPath("$.email", is("prueba01@prueba.es")));
 		
 		//Just an example of how to manage the from of this page in case it is necessary further checking as a user using the web interface.
 //		HtmlPage createMsgFromPage = webClient.getPage("http://localhost:8080/");

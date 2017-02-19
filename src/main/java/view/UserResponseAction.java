@@ -4,15 +4,13 @@ import domain.User;
 import domain.UserInfo;
 import domain.UserInfoAdapter;
 import domain.UserLoginData;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Component;
-import org.springframework.stereotype.Service;
 import services.ParticipantsService;
 
 /**
  * Created by Nicolás on 17/02/2017.
+ * Class that handles the login data response. Access the service layer and recovers the user
  */
 public class UserResponseAction {
     private final ParticipantsService part;

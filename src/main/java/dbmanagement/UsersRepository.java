@@ -7,6 +7,7 @@ import org.springframework.stereotype.Repository;
 
 /**
  * Created by Damian on 06/02/2017.
+ * Repository interface from the <a href="https://spring.io/guides/gs/accessing-data-mongodb/">MongoDB Spring API</a>
  */
 
 @Repository

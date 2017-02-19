@@ -2,11 +2,9 @@ package services;
 
 import dbmanagement.Database;
 import domain.User;
-
-import org.jasypt.util.password.StrongPasswordEncryptor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import services.ParticipantsService;
+import util.JasyptEncryptor;
 
 /**
  * Created by Nicolás on 14/02/2017.
@@ -15,7 +13,7 @@ import services.ParticipantsService;
 public class PartipantsServiceImpl implements ParticipantsService {
 
     private final Database dat;
-    private final StrongPasswordEncryptor encryptor = new StrongPasswordEncryptor();
+    private final JasyptEncryptor encryptor = new JasyptEncryptor();
 
     @Autowired
     PartipantsServiceImpl(Database dat){
@@ -25,7 +23,7 @@ public class PartipantsServiceImpl implements ParticipantsService {
     @Override
     public User getParticipant(String email, String password) {
         User user = dat.getParticipant(email);
-        if(encryptor.checkPassword(password, user.getPassword()))
+        if(user != null && encryptor.checkPassword(password, user.getPassword()))
             return user;
         else return null;
     }

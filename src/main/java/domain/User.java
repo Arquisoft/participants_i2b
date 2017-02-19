@@ -93,7 +93,7 @@ public class User {
     }
 
     public Date getDateOfBirth() {
-        return dateOfBirth;
+        return new Date(dateOfBirth.getTime());
     }
 
     public String getAddress() {
