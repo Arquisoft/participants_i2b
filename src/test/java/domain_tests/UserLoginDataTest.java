@@ -1,4 +1,4 @@
-package domainTests;
+package domain_tests;
 
 import domain.UserLoginData;
 import org.junit.Before;

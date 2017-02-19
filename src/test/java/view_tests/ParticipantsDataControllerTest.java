@@ -1,4 +1,4 @@
-package view;
+package view_tests;
 
 /**
  * Created by Jorge.
@@ -8,48 +8,33 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
-import static org.springframework.test.web.servlet.setup.MockMvcBuilders.standaloneSetup;
 
-import dbmanagement.Database;
 import domain.UserLoginData;
 import main.Application;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
-import org.mockito.runners.MockitoJUnitRunner;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.SpringBootConfiguration;
-import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.context.embedded.LocalServerPort;
 import org.springframework.boot.test.IntegrationTest;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.context.annotation.ComponentScan;
 import org.springframework.http.MediaType;
-import org.springframework.mock.web.MockHttpServletRequest;
-import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
-import org.springframework.test.context.web.WebAppConfiguration;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockHttpServletRequestBuilder;
-import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
-import org.springframework.test.web.servlet.setup.DefaultMockMvcBuilder;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.context.WebApplicationContext;
-import org.springframework.web.servlet.view.InternalResourceViewResolver;
 
 import com.gargoylesoftware.htmlunit.WebClient;
 
 import domain.User;
 import services.ParticipantsService;
 
-import java.net.URL;
-
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT, classes ={Application.class})
 @RunWith(SpringJUnit4ClassRunner.class)
 @IntegrationTest("local.server.port=1")
-public class TrialTest{
+public class ParticipantsDataControllerTest {
 
     @LocalServerPort
     private int port;
@@ -69,19 +54,13 @@ public class TrialTest{
 	
 	@Before
 	public void setUp() throws Exception {
-	    String url = "hola " + port;
 
         MockitoAnnotations.initMocks(this);
 
-		InternalResourceViewResolver viewResolver = new InternalResourceViewResolver();
-
         this.mockMvc = MockMvcBuilders.webAppContextSetup(this.context).build();
 		webClient = new WebClient();
-		//webClient.setWebConnection(new MockMvcWebConnection(mockMvc));
 		webClient.getOptions().setThrowExceptionOnFailingStatusCode(false);
 		webClient.getOptions().setThrowExceptionOnScriptError(false);
-		  
-		//webClient.getOptions().setThrowExceptionOnFailingStatusCode(false);
 
 	}
 
@@ -92,13 +71,13 @@ public class TrialTest{
 	    /*
 	    {
             "_id" : ObjectId("58a8670df086e81dc034d7fc"),
-            "name" : "Prueba01",
-            "surname" : "Apellido01",
+            "firstName" : "Prueba01",
+            "lastName" : "Apellido01",
             "email" : "prueba01@prueba.es",
             "address" : "c/Prueba n0 1a",
             "nationality" : "España",
-            "dni" : "00000001J",
-            "date" : ISODate("1981-12-27T23:00:00.000Z"),
+            "userId" : "00000001J",
+            "dateOfBirth" : ISODate("1981-12-27T23:00:00.000Z"),
             "unencrypted" : "4[[j[frVCUMJ>hU",
             "password" : "khZZwjdhWwVbMdmOvz9eqBfKR1N6A+CdFBDM9c1dQduUnGewQyPRlBxB4Q6wT7Cq"
         }

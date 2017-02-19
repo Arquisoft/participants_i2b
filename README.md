@@ -20,6 +20,15 @@ Skeleton of participants module
 # MongoDB
 This project uses MongoDB as the database. You can check how to use it on
  - [MongoDB install](https://github.com/Arquisoft/participants_i2b/wiki/MongoDB)
+ 
+## REST requests
+In order to use the user credentials to obtain your data, you can send a POST request to http://localhost:8080/user. The
+data in this request can come as either:
+ - JSON:
+ ```JSON 
+ {"login":"yourLogin", "password":"yourpassword"}
+ ```
+ 
 
 
 
