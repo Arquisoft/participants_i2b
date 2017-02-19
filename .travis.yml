@@ -6,6 +6,18 @@ services:
 after_success:
 - bash <(curl -s https://codecov.io/bash)
 before_script:
+- mongo mydb_test --eval 'db.getCollection('users').insertOne({
+                                      "_id" : ObjectId("58a8670df086e81dc034d7fc"),
+                                      "firstName" : "Prueba01",
+                                      "lastName" : "Apellido01",
+                                      "email" : "prueba01@prueba.es",
+                                      "address" : "c/Prueba n0 1a",
+                                      "nationality" : "España",
+                                      "userId" : "00000001J",
+                                      "dateOfBirth" : ISODate("1981-12-27T23:00:00.000Z"),
+                                      "unencrypted" : "4[[j[frVCUMJ>hU",
+                                      "password" : "khZZwjdhWwVbMdmOvz9eqBfKR1N6A+CdFBDM9c1dQduUnGewQyPRlBxB4Q6wT7Cq"
+                                  })'
 - "export DISPLAY=:99.0"
 - "sh -e /etc/init.d/xvfb start"
 - sleep 3 # give xvfb some time to start
