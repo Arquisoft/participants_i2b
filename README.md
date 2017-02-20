@@ -22,11 +22,11 @@ This project uses MongoDB as the database. You can check how to use it on
  
 ## REST requests
 In order to use the user credentials to obtain your data, you can send a POST request to http://localhost:8080/user. The
-data in this request can come as either:
+data in this request can come as:
  - JSON:
- ```JSON 
- {"login":"yourLogin", "password":"yourpassword"}
- ```
+```json
+{"login":"yourLogin", "password":"yourpassword"}
+```
  
 
 
