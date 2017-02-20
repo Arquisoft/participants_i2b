@@ -1,8 +1,11 @@
 package domain;
 
 import org.bson.types.ObjectId;
+import org.jasypt.util.password.StrongPasswordEncryptor;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
+
+import util.JasyptEncryptor;
 
 import java.util.Date;
 
@@ -121,7 +124,12 @@ public class User {
     }
 
     public void setPassword(String password) {
-        this.password = password;
+    	//Should be encripted when saved
+    	
+    	JasyptEncryptor encryptor = new JasyptEncryptor();
+        String encriptedCorrectPassword = encryptor.encryptPassword(password);
+    	
+        this.password = encriptedCorrectPassword;
     }
 
     public void setDateOfBirth(Date dateOfBirth) {

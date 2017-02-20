@@ -124,5 +124,30 @@ public class ParticipantsDataControllerTest {
 		
 		
 	}
+    
+//    @Test
+//	public void userInterfaceInsertInfo() throws Exception{
+//    	/*
+//	    {
+//            "_id" : ObjectId("58a8670df086e81dc034d7fc"),
+//            "firstName" : "Prueba01",
+//            "lastName" : "Apellido01",
+//            "email" : "prueba01@prueba.es",
+//            "address" : "c/Prueba n0 1a",
+//            "nationality" : "España",
+//            "userId" : "00000001J",
+//            "dateOfBirth" : ISODate("1981-12-27T23:00:00.000Z"),
+//            "unencrypted" : "4[[j[frVCUMJ>hU",
+//            "password" : "khZZwjdhWwVbMdmOvz9eqBfKR1N6A+CdFBDM9c1dQduUnGewQyPRlBxB4Q6wT7Cq"
+//        }
+//	     */
+    
+    //No funciona por cambio en el método
+////        MockHttpServletRequestBuilder request = post("/userForm").param("login", "prueba01@prueba.es")
+////															.param("password", "4[[j[frVCUMJ>hU");
+////    	
+////    	mockMvc.perform(request).andExpect(status().isOk());
+//    }
+  }
 
-}
+

@@ -1,6 +1,9 @@
 package domain_tests;
 
 import domain.User;
+import util.JasyptEncryptor;
+
+import org.jasypt.util.password.StrongPasswordEncryptor;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
@@ -75,14 +78,18 @@ public class UserTest {
     @Test
     public void passwordTest(){
 
+    	JasyptEncryptor encryptor = new JasyptEncryptor();
+    	
         nico.setPassword("1234");
-        Assert.assertEquals("1234", nico.getPassword());
+        
+    
+        Assert.assertTrue(encryptor.checkPassword( "1234",nico.getPassword()));
 
         jorge.setPassword("abcd");
-        Assert.assertEquals("abcd", jorge.getPassword());
+        Assert.assertTrue(encryptor.checkPassword( "abcd",jorge.getPassword()));
 
-        damian.setPassword(jorge.getPassword());
-        Assert.assertEquals("abcd", damian.getPassword());
+        damian.setPassword("yay");
+        Assert.assertTrue(encryptor.checkPassword( "yay",damian.getPassword()));
     }
 
     @Test
