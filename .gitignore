@@ -78,16 +78,7 @@ local.properties
 
 # IntelliJ
 /out/
-<<<<<<< HEAD
-.idea/copyright
-.idea/.name
-.idea/compiler.xml
-.idea/encodings.xml
-.idea/misc.xml
-.idea/modules.xml
-.idea/vcs.xml
+
+
+.idea/
 participants0.iml
-=======
-*/.idea/*
-*.iml
->>>>>>> db523c2cd673a89a3d22e56a5bc36bee5164b459
