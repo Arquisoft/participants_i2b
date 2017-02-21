@@ -11,7 +11,6 @@ import util.JasyptEncryptor;
 import java.util.Calendar;
 import java.util.Date;
 
-import org.jasypt.util.password.StrongPasswordEncryptor;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
@@ -99,7 +98,6 @@ public class DatabaseTest {
         User user = dat.getParticipant("LGracia@gmail.com");
         user.setPassword("confidencial");
         JasyptEncryptor encryptor = new JasyptEncryptor();
-        String encriptedCorrectPassword = encryptor.encryptPassword("confidencial");
         dat.updateInfo(user);
         User userAfter = dat.getParticipant("LGracia@gmail.com");
         Assert.assertTrue(encryptor.checkPassword("confidencial", userAfter.getPassword())); //They should be the same when we introduce the password.

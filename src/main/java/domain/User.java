@@ -1,7 +1,6 @@
 package domain;
 
 import org.bson.types.ObjectId;
-import org.jasypt.util.password.StrongPasswordEncryptor;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
@@ -124,8 +123,6 @@ public class User {
     }
 
     public void setPassword(String password) {
-    	//Should be encripted when saved
-    	
         this.password = encryptPass(password);
     }
 

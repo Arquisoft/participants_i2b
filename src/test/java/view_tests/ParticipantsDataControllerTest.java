@@ -2,6 +2,7 @@ package view_tests;
 
 /**
  * Created by Jorge.
+ * Test for the ParticipantsDataController, mainly focused on REST requests
  */
 import static org.hamcrest.Matchers.is;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
@@ -29,7 +30,6 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockHttpServletRequestBuilder;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.context.WebApplicationContext;
-import org.springframework.web.util.NestedServletException;
 
 import com.gargoylesoftware.htmlunit.WebClient;
 
@@ -61,7 +61,7 @@ public class ParticipantsDataControllerTest {
 	@Autowired
 	private UsersRepository repo;
 	
-	private User referencedUser;
+	private User maria;
 	private String plainPassword;
 	
 	@Before
@@ -74,89 +74,95 @@ public class ParticipantsDataControllerTest {
 		webClient.getOptions().setThrowExceptionOnFailingStatusCode(false);
 		webClient.getOptions().setThrowExceptionOnScriptError(false);
 
+		//Setting up maria
 		Calendar cal = Calendar.getInstance();
     	cal.set(Calendar.YEAR, 1990);
     	cal.set(Calendar.MONTH,1);
     	cal.set(Calendar.DAY_OF_MONTH, 1);
-    	plainPassword="pass14753";
-    	referencedUser = new User("Maria", "MamaMia", "asd", plainPassword, cal.getTime(), "Hallo", "Core", "158");
-    	repo.insert(referencedUser);
+    	plainPassword ="pass14753";
+    	maria = new User("Maria", "MamaMia",
+                "asd", plainPassword, cal.getTime(), "Hallo", "Core", "158");
+    	repo.insert(maria);
 	}
 	
 	@After
 	public void tearDown(){
-		repo.delete(referencedUser);
+		repo.delete(maria);
 	}
-
-
 
     @Test
 	public void userInsertInformation() throws Exception{
-	    /*
-	    {
-            "_id" : ObjectId("58a8670df086e81dc034d7fc"),
-            "firstName" : "Prueba01",
-            "lastName" : "Apellido01",
-            "email" : "prueba01@prueba.es",
-            "address" : "c/Prueba n0 1a",
-            "nationality" : "España",
-            "userId" : "00000001J",
-            "dateOfBirth" : ISODate("1981-12-27T23:00:00.000Z"),
-            "unencrypted" : "4[[j[frVCUMJ>hU",
-            "password" : "khZZwjdhWwVbMdmOvz9eqBfKR1N6A+CdFBDM9c1dQduUnGewQyPRlBxB4Q6wT7Cq"
-        }
-	     */
-
-	    /*
-	    Response
-	    {"firstName":"Prueba01","lastName":"Apellido01","age":35,"userId":"00000001J","email":"prueba01@prueba.es"}
-	    * */
-		
-		//Here would be more appropiate to get the user from the database.
-        User prueba = new User("Prueba01", "Apellido01",
-                    "prueba01@prueba.es", "4[[j[frVCUMJ>hU");
-        UserLoginData data = new UserLoginData("prueba01@prueba.es", "4[[j[frVCUMJ>hU");
-		String payload = String.format("{\"login\":\"%s\", \"password\":\"%s\"}", referencedUser.getEmail(), plainPassword);
+		String payload = String.format("{\"login\":\"%s\", \"password\":\"%s\"}", maria.getEmail(), plainPassword);
         //We send a POST request to that URI (from http:localhost...)
         MockHttpServletRequestBuilder request = post("/user")
                 .contentType(MediaType.APPLICATION_JSON).content(payload.getBytes());
 		mockMvc.perform(request)
                             .andDo(print())//AndDoPrint it is very usefull to see the http response and see if something went wrong.
 							.andExpect(status().isOk()) //The state of the response must be OK. (200);
-							.andExpect(jsonPath("$.firstName",is(referencedUser.getFirstName()))) //We can do jsonpaths in order to check that the json information displayes its ok.
-                            .andExpect(jsonPath("$.lastName", is(referencedUser.getLastName())))
+							.andExpect(jsonPath("$.firstName",is(maria.getFirstName()))) //We can do jsonpaths in order to check that the json information displayes its ok.
+                            .andExpect(jsonPath("$.lastName", is(maria.getLastName())))
                             .andExpect(jsonPath("$.age", is(27)))//Born in 1996
-                            .andExpect(jsonPath("$.userId", is(referencedUser.getUserId())))
-                            .andExpect(jsonPath("$.email", is(referencedUser.getEmail())));
-		
-		//Just an example of how to manage the from of this page in case it is necessary further checking as a user using the web interface.
-//		HtmlPage createMsgFromPage = webClient.getPage("http://localhost:8080/");
-//		HtmlForm form = createMsgFromPage.getHtmlElementById("Datos");
-//		HtmlTextInput summaryInput= createMsgFromPage.getHtmlElementById("name");
-//		summaryInput.setValueAttribute("Pepe");
-//		HtmlButton submit = form.getOneHtmlElementByAttribute("button", "type", "submit");
-//		
-		
-//Este test sería apropiado si devuelve una página html y no información JSON
-//		HtmlPage newMessagePage = submit.click();
-//		
-//		assertTrue(newMessagePage.getUrl().toString().endsWith("/info"));
-//		String hola= newMessagePage.getElementById("Hola").getTextContent();
-//		String contraseña = newMessagePage.getElementById("contraseña").getTextContent();
-//		assertTrue(hola.equals("Hola Pepe"));
-//		assertTrue(contraseña.equals("Tu contraseña es: "));
-		
-		
+                            .andExpect(jsonPath("$.userId", is(maria.getUserId())))
+                            .andExpect(jsonPath("$.email", is(maria.getEmail())));
 	}
     
     @Test
 	public void userInterfaceInsertInfoCorect() throws Exception{
-    
-  
-        MockHttpServletRequestBuilder request = post("/userForm").param("login", referencedUser.getEmail())
+        MockHttpServletRequestBuilder request = post("/userForm").param("login", maria.getEmail())
 															.param("password", plainPassword);
-    	
     	mockMvc.perform(request).andExpect(status().isOk());
+    }
+
+    @Test
+    public void testForNotFound() throws Exception{
+        String payload = String.format("{\"login\":\"%s\", \"password\":\"%s\"}", "Nothing", "Not really");
+        MockHttpServletRequestBuilder request = post("/user")
+                .contentType(MediaType.APPLICATION_JSON).content(payload.getBytes());
+        mockMvc.perform(request)
+                .andDo(print())//AndDoPrint it is very usefull to see the http response and see if something went wrong.
+                .andExpect(status().isNotFound()); //The state of the response must be OK. (200);
+    }
+
+    /**
+     * Should return a 404 as before
+     */
+    @Test
+    public void testForIncorrectPassword() throws Exception {
+        String payload = String.format("{\"login\":\"%s\", \"password\":\"%s\"}",
+                maria.getEmail(), "Not maria's password");
+        MockHttpServletRequestBuilder request = post("/user")
+                .contentType(MediaType.APPLICATION_JSON).content(payload.getBytes());
+        mockMvc.perform(request)
+                .andDo(print())
+                .andExpect(status().isNotFound());
+    }
+
+    @Test
+    public void testChangePassword() throws Exception {
+        //We check we have the proper credentials
+        MockHttpServletRequestBuilder request = post("/userForm")
+                .param("login", maria.getEmail())
+                .param("password", plainPassword);
+        mockMvc.perform(request).andExpect(status().isOk());
+        //We change it
+        request = post("/userChangePassword")
+                .param("password", plainPassword)
+                .param("newPassword", "HOLA")
+                .param("newPasswordConfirm", "HOLA");
+        mockMvc.perform(request).andExpect(status().isOk());
+
+        String payload = String.format("{\"login\":\"%s\", \"password\":\"%s\"}", maria.getEmail(), "HOLA");
+        //We check password has changed
+        request = post("/user")
+                .contentType(MediaType.APPLICATION_JSON).content(payload.getBytes());
+        mockMvc.perform(request)
+                .andDo(print())
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.firstName",is(maria.getFirstName())))
+                .andExpect(jsonPath("$.lastName", is(maria.getLastName())))
+                .andExpect(jsonPath("$.age", is(27)))
+                .andExpect(jsonPath("$.userId", is(maria.getUserId())))
+                .andExpect(jsonPath("$.email", is(maria.getEmail())));
     }
     
 }

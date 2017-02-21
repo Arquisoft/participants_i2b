@@ -20,7 +20,7 @@ public interface ParticipantsService {
     /**
      * Updates the password for the given user
      * @param user The given user
-     * @param oldPassword The new password
+     * @param newPassword The new password
      */
     void updateInfo(User user, String newPassword);
 

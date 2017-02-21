@@ -30,11 +30,8 @@ public class PartipantsServiceImpl implements ParticipantsService {
 
     @Override
     public void updateInfo(User user, String newPassword) {
-    	
     	//It is not necessary, done by the domain class itself.
     	user.setPassword(newPassword);
     	dat.updateInfo(user);
-    	
-
     }
 }

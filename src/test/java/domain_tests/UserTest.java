@@ -3,7 +3,6 @@ package domain_tests;
 import domain.User;
 import util.JasyptEncryptor;
 
-import org.jasypt.util.password.StrongPasswordEncryptor;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;

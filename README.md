@@ -19,6 +19,9 @@ Skeleton of participants module
 # MongoDB
 This project uses MongoDB as the database. You can check how to use it on
  - [MongoDB install](https://github.com/Arquisoft/participants_i2b/wiki/MongoDB)
+
+# Jasypth
+This project uses Jasypt to encrypt the passwords. You don't need to download it, but you can check it at: http://www.jasypt.org/
  
 ## REST requests
 In order to use the user credentials to obtain your data, you can send a POST request to http://localhost:8080/user. The
@@ -27,7 +30,28 @@ data in this request can come as:
 ```json
 {"login":"yourLogin", "password":"yourpassword"}
 ```
- 
+
+## Tests
+To run the tests just use `mvn test`. No data in the database is needed to run them. But if you want to test the
+user interface manually you'll have to introduce this document:
+
+```json
+{
+    "_id" : ObjectId("58a8670df086e81dc034d7fc"),
+    "firstName" : "Prueba01",
+    "lastName" : "Apellido01",
+    "email" : "prueba01@prueba.es",
+    "address" : "c/Prueba n0 1a",
+    "nationality" : "España",
+    "userId" : "00000001J",
+    "dateOfBirth" : ISODate("1981-12-27T23:00:00.000Z"),
+    "password" : "khZZwjdhWwVbMdmOvz9eqBfKR1N6A+CdFBDM9c1dQduUnGewQyPRlBxB4Q6wT7Cq"
+}
+```
+
+And as data use:
+ - login: prueba01@prueba.es
+ - password: 4[[j[frVCUMJ>hU
 
 
 
