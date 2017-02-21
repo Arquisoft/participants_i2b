@@ -7,6 +7,7 @@ import domain.UserLoginData;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 import services.ParticipantsService;
+import util.JasyptEncryptor;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -19,6 +20,8 @@ import org.springframework.ui.Model;
 public class ParticipantsController {
 	
 	private final ParticipantsService part;
+	
+	private User loggedUser;
 
     ParticipantsController(ParticipantsService part){
         this.part = part;
@@ -32,11 +35,11 @@ public class ParticipantsController {
     }
     
   //This method process an POST html request once fulfilled the login.html form (clicking in the "Enter" button).
-  @RequestMapping(value = "/userForm", method = RequestMethod.POST, consumes = {
-          MediaType.APPLICATION_JSON_VALUE,
-          MediaType.APPLICATION_XML_VALUE }, produces = MediaType.APPLICATION_JSON_VALUE)
+  @RequestMapping(value = "/userForm", method = RequestMethod.POST)
     public String showInfo(Model model, @ModelAttribute UserLoginData data){
+	  System.out.println(data.getLogin());
     	 User user = part.getParticipant(data.getLogin(), data.getPassword());
+    	 System.out.println(user);
         if(user == null){
             return null;
         }
@@ -47,9 +50,31 @@ public class ParticipantsController {
             model.addAttribute("lName", info.getLastName());
             model.addAttribute("age", info.getAge());
             model.addAttribute("email", info.getEmail());
+            model.addAttribute("user", user);
+            loggedUser=user;
              return "data";
          }
      }
+  
+  @RequestMapping(value="/passMenu", method = RequestMethod.GET)
+  public String showMenu(Model model){
+	  //Just in case there must be more processing.
+	  return "changePassword";
+  }
+  
+  @RequestMapping(value="/userChangePassword",method = RequestMethod.POST)
+  public String ChangePassword(Model model, @RequestParam String password,
+		                        @RequestParam String newPassword, @RequestParam String newPasswordConfirm){
+			 
+	  JasyptEncryptor encryptor= new JasyptEncryptor();
+	  if(encryptor.checkPassword(password, loggedUser.getPassword())){
+		  if(newPassword.equals(newPasswordConfirm)){
+			  part.updateInfo(loggedUser, newPassword);
+			  return "data";
+		  }
+	  }
+	  return "changePassword";
+  }
     	
 }
 

@@ -9,8 +9,12 @@ import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
+import java.util.Calendar;
+
 import domain.UserLoginData;
 import main.Application;
+
+import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -25,9 +29,11 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockHttpServletRequestBuilder;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.context.WebApplicationContext;
+import org.springframework.web.util.NestedServletException;
 
 import com.gargoylesoftware.htmlunit.WebClient;
 
+import dbmanagement.UsersRepository;
 import domain.User;
 import services.ParticipantsService;
 
@@ -52,6 +58,12 @@ public class ParticipantsDataControllerTest {
 	private WebClient webClient;
 	
 	
+	@Autowired
+	private UsersRepository repo;
+	
+	private User referencedUser;
+	private String plainPassword;
+	
 	@Before
 	public void setUp() throws Exception {
 
@@ -62,6 +74,18 @@ public class ParticipantsDataControllerTest {
 		webClient.getOptions().setThrowExceptionOnFailingStatusCode(false);
 		webClient.getOptions().setThrowExceptionOnScriptError(false);
 
+		Calendar cal = Calendar.getInstance();
+    	cal.set(Calendar.YEAR, 1990);
+    	cal.set(Calendar.MONTH,1);
+    	cal.set(Calendar.DAY_OF_MONTH, 1);
+    	plainPassword="pass14753";
+    	referencedUser = new User("Maria", "MamaMia", "asd", plainPassword, cal.getTime(), "Hallo", "Core", "158");
+    	repo.insert(referencedUser);
+	}
+	
+	@After
+	public void tearDown(){
+		
 	}
 
 
@@ -92,18 +116,18 @@ public class ParticipantsDataControllerTest {
         User prueba = new User("Prueba01", "Apellido01",
                     "prueba01@prueba.es", "4[[j[frVCUMJ>hU");
         UserLoginData data = new UserLoginData("prueba01@prueba.es", "4[[j[frVCUMJ>hU");
-		String payload = String.format("{\"login\":\"%s\", \"password\":\"%s\"}", data.getLogin(), data.getPassword());
+		String payload = String.format("{\"login\":\"%s\", \"password\":\"%s\"}", referencedUser.getEmail(), plainPassword);
         //We send a POST request to that URI (from http:localhost...)
         MockHttpServletRequestBuilder request = post("/user")
                 .contentType(MediaType.APPLICATION_JSON).content(payload.getBytes());
 		mockMvc.perform(request)
                             .andDo(print())//AndDoPrint it is very usefull to see the http response and see if something went wrong.
 							.andExpect(status().isOk()) //The state of the response must be OK. (200);
-							.andExpect(jsonPath("$.firstName",is(prueba.getFirstName()))) //We can do jsonpaths in order to check that the json information displayes its ok.
-                            .andExpect(jsonPath("$.lastName", is(prueba.getLastName())))
-                            .andExpect(jsonPath("$.age", is(35)))//Born in 1996
-                            .andExpect(jsonPath("$.userId", is("00000001J")))
-                            .andExpect(jsonPath("$.email", is("prueba01@prueba.es")));
+							.andExpect(jsonPath("$.firstName",is(referencedUser.getFirstName()))) //We can do jsonpaths in order to check that the json information displayes its ok.
+                            .andExpect(jsonPath("$.lastName", is(referencedUser.getLastName())))
+                            .andExpect(jsonPath("$.age", is(27)))//Born in 1996
+                            .andExpect(jsonPath("$.userId", is(referencedUser.getUserId())))
+                            .andExpect(jsonPath("$.email", is(referencedUser.getEmail())));
 		
 		//Just an example of how to manage the from of this page in case it is necessary further checking as a user using the web interface.
 //		HtmlPage createMsgFromPage = webClient.getPage("http://localhost:8080/");
@@ -125,29 +149,16 @@ public class ParticipantsDataControllerTest {
 		
 	}
     
-//    @Test
-//	public void userInterfaceInsertInfo() throws Exception{
-//    	/*
-//	    {
-//            "_id" : ObjectId("58a8670df086e81dc034d7fc"),
-//            "firstName" : "Prueba01",
-//            "lastName" : "Apellido01",
-//            "email" : "prueba01@prueba.es",
-//            "address" : "c/Prueba n0 1a",
-//            "nationality" : "España",
-//            "userId" : "00000001J",
-//            "dateOfBirth" : ISODate("1981-12-27T23:00:00.000Z"),
-//            "unencrypted" : "4[[j[frVCUMJ>hU",
-//            "password" : "khZZwjdhWwVbMdmOvz9eqBfKR1N6A+CdFBDM9c1dQduUnGewQyPRlBxB4Q6wT7Cq"
-//        }
-//	     */
+    @Test
+	public void userInterfaceInsertInfoCorect() throws Exception{
     
-    //No funciona por cambio en el método
-////        MockHttpServletRequestBuilder request = post("/userForm").param("login", "prueba01@prueba.es")
-////															.param("password", "4[[j[frVCUMJ>hU");
-////    	
-////    	mockMvc.perform(request).andExpect(status().isOk());
-//    }
-  }
+  
+        MockHttpServletRequestBuilder request = post("/userForm").param("login", referencedUser.getEmail())
+															.param("password", plainPassword);
+    	
+    	mockMvc.perform(request).andExpect(status().isOk());
+    }
+    
+}
 
 
