@@ -37,7 +37,7 @@ public class User {
         this.firstName = firstName;
         this.lastName = lastName;
         this.email = email;
-        this.password = password;
+        this.password=encryptPass(password); 
     }
 
     public User(String firstName, String lastName, String email,
@@ -126,10 +126,7 @@ public class User {
     public void setPassword(String password) {
     	//Should be encripted when saved
     	
-    	JasyptEncryptor encryptor = new JasyptEncryptor();
-        String encriptedCorrectPassword = encryptor.encryptPassword(password);
-    	
-        this.password = encriptedCorrectPassword;
+        this.password = encryptPass(password);
     }
 
     public void setDateOfBirth(Date dateOfBirth) {
@@ -142,5 +139,10 @@ public class User {
 
     public void setNationality(String nationality) {
         this.nationality = nationality;
+    }
+    
+    private String encryptPass(String password){
+    	JasyptEncryptor encryptor = new JasyptEncryptor();
+        return encryptor.encryptPassword(password);
     }
 }

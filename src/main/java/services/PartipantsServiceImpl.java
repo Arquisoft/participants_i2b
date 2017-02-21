@@ -30,10 +30,9 @@ public class PartipantsServiceImpl implements ParticipantsService {
 
     @Override
     public void updateInfo(User user, String newPassword) {
-    	//We use the Jasypt library to encrypt the password.
-    	String encryptedPassword = encryptor.encryptPassword(newPassword);
     	
-    	user.setPassword(encryptedPassword);
+    	//It is not necessary, done by the domain class itself.
+    	user.setPassword(newPassword);
     	dat.updateInfo(user);
     	
 

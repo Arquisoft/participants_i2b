@@ -22,7 +22,7 @@ public interface ParticipantsService {
      * @param user The given user
      * @param oldPassword The new password
      */
-    void updateInfo(User user, String oldPassword);
+    void updateInfo(User user, String newPassword);
 
 
 }
