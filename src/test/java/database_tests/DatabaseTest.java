@@ -69,7 +69,7 @@ public class DatabaseTest {
     "dateOfBirth" : ISODate("1982-12-27T23:00:00.000Z"),
     "address" : "Hallo",
     "nationality" : "Core",
-    "UserId" : "321",
+    "userId" : "321",
     "email" : "asd"
 }
      */
@@ -78,7 +78,7 @@ public class DatabaseTest {
     	 User user = dat.getParticipant("asd");
     	 Assert.assertEquals("Maria", user.getFirstName());
     	 Assert.assertEquals("MamaMia", user.getLastName());
-    	 Assert.assertEquals("1982-12-27T23:00:00.000Z", user.getDateOfBirth());
+    	 Assert.assertEquals("Tue Dec 28 00:00:00 CET 1982", user.getDateOfBirth().toString());
     	 Assert.assertEquals("Hallo", user.getAddress());
     	 Assert.assertEquals("Core", user.getNationality());
     	 Assert.assertEquals("321", user.getUserId());

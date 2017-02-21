@@ -4,13 +4,12 @@ import domain.User;
 import domain.UserInfo;
 import domain.UserInfoAdapter;
 import domain.UserLoginData;
-import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.http.MediaType;
+import org.springframework.web.bind.annotation.*;
 import services.ParticipantsService;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
 
 
 /**
@@ -33,7 +32,9 @@ public class ParticipantsController {
     }
     
   //This method process an POST html request once fulfilled the login.html form (clicking in the "Enter" button).
-    @PostMapping(value = "/userForm")
+  @RequestMapping(value = "/userForm", method = RequestMethod.POST, consumes = {
+          MediaType.APPLICATION_JSON_VALUE,
+          MediaType.APPLICATION_XML_VALUE }, produces = MediaType.APPLICATION_JSON_VALUE)
     public String showInfo(Model model, @ModelAttribute UserLoginData data){
     	 User user = part.getParticipant(data.getLogin(), data.getPassword());
         if(user == null){
