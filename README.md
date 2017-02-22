@@ -31,6 +31,14 @@ data in this request can come as:
 {"login":"yourLogin", "password":"yourpassword"}
 ```
 
+- XML:
+```xml
+<data>
+ <login>yourLogin</login>
+ <password>yourPassword</password
+</data>
+```
+
 ## Tests
 To run the tests just use `mvn test`. No data in the database is needed to run them. But if you want to test the
 user interface manually you'll have to introduce this document:

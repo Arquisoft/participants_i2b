@@ -1,5 +1,8 @@
 package domain;
 
+import javax.xml.bind.annotation.XmlRootElement;
+
+@XmlRootElement(name = "data")
 public class UserLoginData {
 
 
