@@ -35,7 +35,7 @@ data in this request can come as:
 ```xml
 <data>
  <login>yourLogin</login>
- <password>yourPassword</password
+ <password>yourPassword</password>
 </data>
 ```
 
