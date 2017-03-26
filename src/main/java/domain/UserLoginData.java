@@ -1,7 +1,10 @@
 package domain;
 
-public class UserLoginData {
+import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlRootElement;
 
+@XmlRootElement(name = "data")
+public class UserLoginData {
 
 	private String login;
 	private String password;

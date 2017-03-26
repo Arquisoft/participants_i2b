@@ -105,6 +105,23 @@ public class ParticipantsDataControllerTest {
                             .andExpect(jsonPath("$.userId", is(maria.getUserId())))
                             .andExpect(jsonPath("$.email", is(maria.getEmail())));
 	}
+
+	@Test
+    public void userInsertInXml() throws Exception {
+        String payload = String.format("<data><login>%s</login><password>%s</password></data>",
+                maria.getEmail(), plainPassword);
+        //We send a POST request to that URI (from http:localhost...)
+        MockHttpServletRequestBuilder request = post("/user")
+                .contentType(MediaType.APPLICATION_XML).content(payload.getBytes());
+        mockMvc.perform(request)
+                .andDo(print())//AndDoPrint it is very usefull to see the http response and see if something went wrong.
+                .andExpect(status().isOk()) //The state of the response must be OK. (200);
+                .andExpect(jsonPath("$.firstName",is(maria.getFirstName()))) //We can do jsonpaths in order to check that the json information displayes its ok.
+                .andExpect(jsonPath("$.lastName", is(maria.getLastName())))
+                .andExpect(jsonPath("$.age", is(27)))//Born in 1996
+                .andExpect(jsonPath("$.userId", is(maria.getUserId())))
+                .andExpect(jsonPath("$.email", is(maria.getEmail())));
+    }
     
     @Test
 	public void userInterfaceInsertInfoCorect() throws Exception{
