@@ -6,31 +6,24 @@ import domain.User;
 import domain.UserInfo;
 import domain.UserInfoAdapter;
 import main.Application;
-import util.JasyptEncryptor;
-
-import java.util.Calendar;
-import java.util.Date;
-
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.boot.test.IntegrationTest;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+import util.JasyptEncryptor;
+
+import java.util.Calendar;
+import java.util.Date;
 
 /**
  * Created by Nicolás on 15/02/2017.
  */
 @SpringBootTest(classes ={ Application.class})
-@SpringBootApplication(scanBasePackages = "main")
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration
-@IntegrationTest("local.server.port=0")
 public class DatabaseTest {
 	
 	@Autowired

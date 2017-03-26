@@ -4,25 +4,16 @@ package view_tests;
  * Created by Jorge.
  * Test for the ParticipantsDataController, mainly focused on REST requests
  */
-import static org.hamcrest.Matchers.is;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
-import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
-
-import java.util.Calendar;
-
-import domain.UserLoginData;
+import com.gargoylesoftware.htmlunit.WebClient;
+import dbmanagement.UsersRepository;
+import domain.User;
 import main.Application;
-
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.MockitoAnnotations;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.context.embedded.LocalServerPort;
-import org.springframework.boot.test.IntegrationTest;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
@@ -30,20 +21,19 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockHttpServletRequestBuilder;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.context.WebApplicationContext;
-
-import com.gargoylesoftware.htmlunit.WebClient;
-
-import dbmanagement.UsersRepository;
-import domain.User;
 import services.ParticipantsService;
 
-@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT, classes ={Application.class})
-@RunWith(SpringJUnit4ClassRunner.class)
-@IntegrationTest("local.server.port=1")
-public class ParticipantsDataControllerTest {
+import java.util.Calendar;
 
-    @LocalServerPort
-    private int port;
+import static org.hamcrest.Matchers.is;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+
+@SpringBootTest(classes ={Application.class})
+@RunWith(SpringJUnit4ClassRunner.class)
+public class ParticipantsDataControllerTest {
 
     @Autowired
     private WebApplicationContext context;
@@ -53,9 +43,6 @@ public class ParticipantsDataControllerTest {
 
 	//MockMvc --> Para realizar peticiones y comprobar resultado, usado para respuestas con informacion json.
 	private MockMvc mockMvc;
-	//WebClient --> We simmulate a user using our web interface,
-    //interacting with the html components and navigability in the web application.
-	private WebClient webClient;
 	
 	
 	@Autowired
@@ -67,12 +54,7 @@ public class ParticipantsDataControllerTest {
 	@Before
 	public void setUp() throws Exception {
 
-        MockitoAnnotations.initMocks(this);
-
         this.mockMvc = MockMvcBuilders.webAppContextSetup(this.context).build();
-		webClient = new WebClient();
-		webClient.getOptions().setThrowExceptionOnFailingStatusCode(false);
-		webClient.getOptions().setThrowExceptionOnScriptError(false);
 
 		//Setting up maria
 		Calendar cal = Calendar.getInstance();
@@ -105,14 +87,13 @@ public class ParticipantsDataControllerTest {
                             .andExpect(jsonPath("$.userId", is(maria.getUserId())))
                             .andExpect(jsonPath("$.email", is(maria.getEmail())));
 	}
-
-	@Test
-    public void userInsertInXml() throws Exception {
-        String payload = String.format("<data><login>%s</login><password>%s</password></data>",
-                maria.getEmail(), plainPassword);
-        //We send a POST request to that URI (from http:localhost...)
+    @Test
+    public void userInsertInformationXML() throws Exception{
+        String payload = String.format("<data><login>%s</login><password>%s</password></data>", maria.getEmail(),
+                plainPassword);
+        //POST request with XML content
         MockHttpServletRequestBuilder request = post("/user")
-                .contentType(MediaType.APPLICATION_XML).content(payload.getBytes());
+                .contentType(MediaType.APPLICATION_XML_VALUE).content(payload.getBytes());
         mockMvc.perform(request)
                 .andDo(print())//AndDoPrint it is very usefull to see the http response and see if something went wrong.
                 .andExpect(status().isOk()) //The state of the response must be OK. (200);

@@ -20,7 +20,7 @@ Skeleton of participants module
 This project uses MongoDB as the database. You can check how to use it on
  - [MongoDB install](https://github.com/Arquisoft/participants_i2b/wiki/MongoDB)
 
-# Jasypth
+# Jasypt
 This project uses Jasypt to encrypt the passwords. You don't need to download it, but you can check it at: http://www.jasypt.org/
  
 ## REST requests
@@ -29,6 +29,14 @@ data in this request can come as:
  - JSON:
 ```json
 {"login":"yourLogin", "password":"yourpassword"}
+```
+
+- XML:
+```xml
+<data>
+ <login>yourLogin</login>
+ <password>yourPassword</password>
+</data>
 ```
 
 ## Tests
@@ -52,6 +60,9 @@ user interface manually you'll have to introduce this document:
 And as data use:
  - login: prueba01@prueba.es
  - password: 4[[j[frVCUMJ>hU
+
+ If you have the data and the database running and the application still reports a 404 Not Found when it shouldn't
+ try deleting the document and adding it again.
 
 
 

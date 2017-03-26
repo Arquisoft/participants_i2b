@@ -6,16 +6,14 @@ import util.JasyptEncryptor;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
 
 /**
  * Created by Damian on 15/02/2017.
  */
-
-@RunWith(SpringJUnit4ClassRunner.class)
 public class UserTest {
 
     private User nico;
@@ -25,10 +23,10 @@ public class UserTest {
     @Before
     public void setUp(){
         Calendar cal = Calendar.getInstance();
-        cal.set(1996, 5, 12);
+        cal.set(1996, Calendar.JUNE, 12);
         nico = new User("Nicolás", "Rivero", "nico@nicomail.com","nico123");
         jorge = new User("Jorge", "Zapatero", "jorge@jorgemail.com", "jorge123", cal.getTime(), "C/ La calle", "España", "111111111A");
-        cal.set(1997, 7, 1);
+        cal.set(1997, Calendar.AUGUST, 1);
         damian = new User("Damian", "Rubio", "damian@damianmail.com", "damian123", cal.getTime(), "C/ The street", "Inglaterra", "222222222B");
     }
 
@@ -93,18 +91,19 @@ public class UserTest {
 
     @Test
     public void dateOfBirthTest(){
+        DateFormat format = new SimpleDateFormat("dd-MM-yyyy");
         Calendar cal = Calendar.getInstance();
 
-        cal.set(1996, 5, 12);
-        Assert.assertEquals(cal.getTime().toString(), jorge.getDateOfBirth().toString());
+        cal.set(1996, Calendar.JUNE, 12);
+        Assert.assertEquals(format.format(cal.getTime()), format.format(jorge.getDateOfBirth()));
 
-        cal.set(1996, 7, 12);
+        cal.set(1996, Calendar.AUGUST, 12);
         nico.setDateOfBirth(cal.getTime());
-        Assert.assertEquals(cal.getTime().toString(), nico.getDateOfBirth().toString());
+        Assert.assertEquals(format.format(cal.getTime()), format.format(nico.getDateOfBirth()));
 
-        cal.set(1900, 1, 1);
+        cal.set(1900, Calendar.FEBRUARY, 1);
         damian.setDateOfBirth(cal.getTime());
-        Assert.assertEquals(cal.getTime().toString(), damian.getDateOfBirth().toString());
+        Assert.assertEquals(format.format(cal.getTime()), format.format(damian.getDateOfBirth()));
     }
 
     @Test
