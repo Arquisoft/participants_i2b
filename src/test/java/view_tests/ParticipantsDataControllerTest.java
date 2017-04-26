@@ -16,6 +16,7 @@ import org.mockito.MockitoAnnotations;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
+import org.springframework.mock.web.MockHttpSession;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockHttpServletRequestBuilder;
@@ -47,6 +48,8 @@ public class ParticipantsDataControllerTest {
 	
 	@Autowired
 	private UsersRepository repo;
+
+	private MockHttpSession session;
 	
 	private User maria;
 	private String plainPassword;
@@ -55,6 +58,8 @@ public class ParticipantsDataControllerTest {
 	public void setUp() throws Exception {
 
         this.mockMvc = MockMvcBuilders.webAppContextSetup(this.context).build();
+
+        session = new MockHttpSession();
 
 		//Setting up maria
 		Calendar cal = Calendar.getInstance();
@@ -76,8 +81,11 @@ public class ParticipantsDataControllerTest {
 	public void userInsertInformation() throws Exception{
 		String payload = String.format("{\"login\":\"%s\", \"password\":\"%s\"}", maria.getEmail(), plainPassword);
         //We send a POST request to that URI (from http:localhost...)
-        MockHttpServletRequestBuilder request = post("/user")
-                .contentType(MediaType.APPLICATION_JSON).content(payload.getBytes());
+        MockHttpServletRequestBuilder request =
+                post("/user")
+                .session(session)
+                .contentType(MediaType.APPLICATION_JSON)
+                        .content(payload.getBytes());
 		mockMvc.perform(request)
                             .andDo(print())//AndDoPrint it is very usefull to see the http response and see if something went wrong.
 							.andExpect(status().isOk()) //The state of the response must be OK. (200);
@@ -93,6 +101,7 @@ public class ParticipantsDataControllerTest {
                 plainPassword);
         //POST request with XML content
         MockHttpServletRequestBuilder request = post("/user")
+                .session(session)
                 .contentType(MediaType.APPLICATION_XML_VALUE).content(payload.getBytes());
         mockMvc.perform(request)
                 .andDo(print())//AndDoPrint it is very usefull to see the http response and see if something went wrong.
@@ -106,8 +115,11 @@ public class ParticipantsDataControllerTest {
     
     @Test
 	public void userInterfaceInsertInfoCorect() throws Exception{
-        MockHttpServletRequestBuilder request = post("/userForm").param("login", maria.getEmail())
-															.param("password", plainPassword);
+        MockHttpServletRequestBuilder request =
+                post("/userForm")
+                        .session(session)
+                        .param("login", maria.getEmail())
+                        .param("password", plainPassword);
     	mockMvc.perform(request).andExpect(status().isOk());
     }
 
@@ -115,6 +127,7 @@ public class ParticipantsDataControllerTest {
     public void testForNotFound() throws Exception{
         String payload = String.format("{\"login\":\"%s\", \"password\":\"%s\"}", "Nothing", "Not really");
         MockHttpServletRequestBuilder request = post("/user")
+                .session(session)
                 .contentType(MediaType.APPLICATION_JSON).content(payload.getBytes());
         mockMvc.perform(request)
                 .andDo(print())//AndDoPrint it is very usefull to see the http response and see if something went wrong.
@@ -129,6 +142,7 @@ public class ParticipantsDataControllerTest {
         String payload = String.format("{\"login\":\"%s\", \"password\":\"%s\"}",
                 maria.getEmail(), "Not maria's password");
         MockHttpServletRequestBuilder request = post("/user")
+                .session(session)
                 .contentType(MediaType.APPLICATION_JSON).content(payload.getBytes());
         mockMvc.perform(request)
                 .andDo(print())
@@ -137,13 +151,16 @@ public class ParticipantsDataControllerTest {
 
     @Test
     public void testChangePassword() throws Exception {
+        MockHttpSession session = new MockHttpSession();
         //We check we have the proper credentials
         MockHttpServletRequestBuilder request = post("/userForm")
+                .session(session)
                 .param("login", maria.getEmail())
                 .param("password", plainPassword);
         mockMvc.perform(request).andExpect(status().isOk());
         //We change it
         request = post("/userChangePassword")
+                .session(session)
                 .param("password", plainPassword)
                 .param("newPassword", "HOLA")
                 .param("newPasswordConfirm", "HOLA");
@@ -152,6 +169,7 @@ public class ParticipantsDataControllerTest {
         String payload = String.format("{\"login\":\"%s\", \"password\":\"%s\"}", maria.getEmail(), "HOLA");
         //We check password has changed
         request = post("/user")
+                .session(session)
                 .contentType(MediaType.APPLICATION_JSON).content(payload.getBytes());
         mockMvc.perform(request)
                 .andDo(print())
